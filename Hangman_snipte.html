@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://rstestweb.netne.net/chwg.js"></script>  
+<script>
+function addToCanvas(){    //Loads the image when page loads
+	drawImage();
+};
+var create_ans;     // Creates a global variable for the answer
+var display_ans;    // Creates a global variable so that the game's logic can display correct letters
+function createAnswer(){
+	create_ans = prompt("Make an answer for Hangman (letters only): ");  //Assigns the answer to create_ans
+	document.getElementById("removebutton").innerHTML="<!--<button onclick=\"createAnswer()\">Make answer for Hangman</button>--\>";	//Removes make answer button
+	document.getElementById("removegenbutton").innerHTML="<!--<button onclick=\"generateAnswer()\">Generate answer for Hangman</button>--\>";   //Removes generate answer button
+	document.getElementById("awli").innerHTML="<span id=\"wrong_letters\"></span>";  //Adds list of incorrect letters
+	document.getElementById("letter_guess").innerHTML="<button onclick=\"guessLetter()\">Guess Letter</button>";   //Adds guess letter button
+	display_ans = create_ans.toUpperCase();    //Uppercases the entire answer to make it easier to work with
+	hideLetters(display_ans);                 //Sends display_ans to hideLetters and runs the function
+};
+function generateAnswer(){
+	create_ans = findWord();     //Generates a word using an external JavaScript file
+	document.getElementById("removebutton").innerHTML="<!--<button onclick=\"createAnswer()\">Make answer for Hangman</button>--\>";
+	document.getElementById("removegenbutton").innerHTML="<!--<button onclick=\"generateAnswer()\">Generate answer for Hangman</button>--\>";
+	document.getElementById("awli").innerHTML="<span id=\"wrong_letters\"></span>";
+	document.getElementById("letter_guess").innerHTML="<button onclick=\"guessLetter()\">Guess Letter</button>";
+	display_ans = create_ans.toUpperCase();
+	hideLetters(display_ans);
+};
+var right_string = ""; wrong_string = ""; loseLife = 0;   //Declares three global variables and gives them empty values
+function guessLetter(){
+	var guessed_letter = prompt("Guess a letter: ");   //Assigns the guessed letter to guessed_letter
+	var check_letter = guessed_letter.toUpperCase();    //Uppercases the guessed letter
+	var test_letter = create_ans.toUpperCase();        //Uppercases the entire answer to reduce the number of different cases if the letter is in the answer or not
+	var send_ans = display_ans;                        // Creates a local variable that stores the uppercased answer
+	if (test_letter.indexOf(check_letter) == -1){      // Tests if the letter is not in the answer
+		wrong_string += " " + check_letter;           // Adds it into wrong_string
+		loseLife++;                  //Increases loseLife by 1
+		drawImage(loseLife);   // Sends loseLife to drawImage to add more to the canvas
+		document.getElementById("wrong_letters").innerHTML="Incorrectly guessed letters: <br/>" + wrong_string;  //Prints out list of wrong letters
+	}else{                     //Goes to this if the letter is in the answer
+		right_string += check_letter;    //Adds it to right_string
+		showLetters(send_ans, right_string);     //Sends send_ans and right_string to showLetters
+	};
+};
+function hideLetters(display_ans){
+	display_ans = display_ans.replace(/[A-Z]/g,"_");    //Changes all letters to "_"
+	document.getElementById("guess_word").innerHTML=display_ans;   //Displays the hidden answer
+};
+function showLetters(shown_ans, r_string){
+	//Checks if the letter is the answer, named as shown_ans, checks if it is in r_string, if so leaves the letter as it is, if not in r_string changes it to "_"
+	if (shown_ans.indexOf("A") > -1){if (r_string.indexOf("A") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/A/g,"_");}}
+	if (shown_ans.indexOf("B") > -1){if (r_string.indexOf("B") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/B/g,"_");}}
+	if (shown_ans.indexOf("C") > -1){if (r_string.indexOf("C") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/C/g,"_");}}
+	if (shown_ans.indexOf("D") > -1){if (r_string.indexOf("D") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/D/g,"_");}}
+	if (shown_ans.indexOf("E") > -1){if (r_string.indexOf("E") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/E/g,"_");}}
+	if (shown_ans.indexOf("F") > -1){if (r_string.indexOf("F") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/F/g,"_");}}
+	if (shown_ans.indexOf("G") > -1){if (r_string.indexOf("G") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/G/g,"_");}}
+	if (shown_ans.indexOf("H") > -1){if (r_string.indexOf("H") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/H/g,"_");}}
+	if (shown_ans.indexOf("I") > -1){if (r_string.indexOf("I") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/I/g,"_");}}
+	if (shown_ans.indexOf("J") > -1){if (r_string.indexOf("J") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/J/g,"_");}}
+	if (shown_ans.indexOf("K") > -1){if (r_string.indexOf("K") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/K/g,"_");}}
+	if (shown_ans.indexOf("L") > -1){if (r_string.indexOf("L") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/L/g,"_");}}
+	if (shown_ans.indexOf("M") > -1){if (r_string.indexOf("M") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/M/g,"_");}}
+	if (shown_ans.indexOf("N") > -1){if (r_string.indexOf("N") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/N/g,"_");}}
+	if (shown_ans.indexOf("O") > -1){if (r_string.indexOf("O") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/O/g,"_");}}
+	if (shown_ans.indexOf("P") > -1){if (r_string.indexOf("P") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/P/g,"_");}}
+	if (shown_ans.indexOf("Q") > -1){if (r_string.indexOf("Q") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/Q/g,"_");}}
+	if (shown_ans.indexOf("R") > -1){if (r_string.indexOf("R") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/R/g,"_");}}
+	if (shown_ans.indexOf("S") > -1){if (r_string.indexOf("S") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/S/g,"_");}}
+	if (shown_ans.indexOf("T") > -1){if (r_string.indexOf("T") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/T/g,"_");}}
+	if (shown_ans.indexOf("U") > -1){if (r_string.indexOf("U") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/U/g,"_");}}
+	if (shown_ans.indexOf("V") > -1){if (r_string.indexOf("V") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/V/g,"_");}}
+	if (shown_ans.indexOf("W") > -1){if (r_string.indexOf("W") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/W/g,"_");}}
+	if (shown_ans.indexOf("X") > -1){if (r_string.indexOf("X") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/X/g,"_");}}
+	if (shown_ans.indexOf("Y") > -1){if (r_string.indexOf("Y") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/Y/g,"_");}}
+	if (shown_ans.indexOf("Z") > -1){if (r_string.indexOf("Z") > -1){shown_ans = shown_ans;}else{shown_ans = shown_ans.replace(/Z/g,"_");}}
+	document.getElementById("guess_word").innerHTML=shown_ans;  //Displays the answer with correctly guessed letters
+	if (shown_ans.indexOf("_") == -1){         //Tests if there no are "_"s in the the answer
+		document.getElementById("awli").innerHTML="YOU WON!";   //Tells you that you won
+		document.getElementById("letter_guess").innerHTML="<!--<button onclick=\"guessLetter()\">Guess Letter</button>--\>";  //Removes guess letter button
+	}
+};
+function drawImage(loseLife){
+	var canvas = document.getElementById("canvas");   //Gets the canvas
+	var context = canvas.getContext("2d");            //and enables the image to be displayed
+	var firstLine = context.beginPath();context.moveTo(20,30);context.lineTo(20,180);context.stroke();     //Draws the image 
+	var secondLine = context.beginPath();context.moveTo(10,180);context.lineTo(30,180);context.stroke();   //that is displayed 
+	var thirdLine = context.beginPath();context.moveTo(20,30);context.lineTo(180,30);context.stroke();     //when the page 
+	var fourthLine = context.beginPath();context.moveTo(180,30);context.lineTo(180,45);context.stroke();   //is loaded
+	if (loseLife >= 1){                    //If loseLife is greater than or equal to one, adds the head
+		var head = context.beginPath();context.arc(180,54,9,0,2*Math.PI,false);context.fillStyle="black";context.fill();context.stroke();
+	};
+	if (loseLife >= 2){                    //If loseLife is greater than or equal to two, adds the torso
+		var torso = context.beginPath();context.moveTo(180,63);context.lineTo(180,123);context.stroke();
+	};
+	if (loseLife >= 3){                    //If loseLife is greater than or equal to three, adds the first arm
+		var arm1 = context.beginPath();context.moveTo(180,78);context.lineTo(165,93);context.stroke();
+	};
+	if (loseLife >= 4){                    //If loseLife is greater than or equal to four, adds the second arm
+		var arm2 = context.beginPath();context.moveTo(180,78);context.lineTo(195,93);context.stroke();
+	};
+	if (loseLife >= 5){                    //If loseLife is greater than or equal to five, adds the first leg
+		var leg1 = context.beginPath();context.moveTo(180,123);context.lineTo(165,138);context.stroke();
+	};
+	if (loseLife >= 6){                    //If loseLife is greater than or equal to six, adds the second leg
+		var leg2 = context.beginPath();context.moveTo(180,123);context.lineTo(195,138);context.stroke();
+		var reveal_ans = display_ans;                  //Assigns the answer to reveal_ans
+		document.getElementById("awli").innerHTML="<br/>YOU LOST! <br/> Answer was: <br/> " + reveal_ans;      //Displays the answer
+		document.getElementById("letter_guess").innerHTML="<!--<button onclick=\"guessLetter()\">Guess Letter</button>--\>";    //Removes guess letter button
+	};
+};
+</script>
+<style>
+div#main{position:absolute;left:30em;top:7em;height:400px;width:400px;}
+p#guess_word{min-height:18px;letter-spacing:6px;font-size:20px;}
+body{background-color:rgb(240,10,10);}
+</style>
+</head>
+<body onload="addToCanvas()">
+<div id="main">
+<canvas id="canvas" height="200px" width="400px"></canvas>
+<p id="guess_word"></p>
+<span id="letter_guess"><!--<button onclick="guessLetter()">Guess Letter</button>--></span>
+<span id="removebutton"><button onclick="createAnswer()">Make answer for Hangman</button></span><br/>
+<span id="removegenbutton"><button onclick="generateAnswer()">Generate answer for Hangman</button></span><br/>
+<!--"awli" = "add wrong letter information"-->
+<p id="awli"><!--<span id="wrong_letters"></span>--></p>
+</div>
+</body>
+</html>
